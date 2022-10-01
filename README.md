@@ -1,5 +1,22 @@
 # 操作步驟
 
+## Network config
+
+- IP and Make
+  - IP: 192.168.1.77
+  - MakeL: 255.255.255.0
+
+- Restart Network
+- check VLP-16 3D LiDAR connect
+  - Ping
+
+    ```shell
+    $ ping 192.168.1.201
+    ```
+
+  - web browser
+    <http://192.168.1.201/>
+
 ## Reality
 
 - Test VLP-16 3D LiDAR
@@ -24,7 +41,6 @@
 ### Reference
 
 - [ubuntu-16.04 ROS-kinetic 下 VLP-16 激光雷達測試詳細教程](https://blog.csdn.net/weixin_44387339/article/details/110350326)
-
 
 # Old
 
