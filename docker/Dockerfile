@@ -77,22 +77,22 @@ RUN chmod 777 /entrypoint.sh
 WORKDIR /home/${USER}
 
 ## install LeGO-LOAM dep
-RUN wget -O ./gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip \
-  && unzip gtsam.zip && cd ./gtsam-4.0.0-alpha2 \
-  && mkdir build && cd build \
-  && cmake .. \
-  && make install
+# RUN wget -O ./gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip \
+#  && unzip gtsam.zip && cd ./gtsam-4.0.0-alpha2 \
+#  && mkdir build && cd build \
+#  && cmake .. \
+#  && make install
 
 ## install A-LOAM dep
-RUN wget -O ./ceres-solver.tar.gz  http://ceres-solver.org/ceres-solver-2.1.0.tar.gz \
-  && tar zxf ceres-solver.tar.gz \
-  && mkdir ceres-bin && cd ceres-bin \
-  && cmake ../ceres-solver-2.1.0 \
-  && make && make test && make install
+# RUN wget -O ./ceres-solver.tar.gz  http://ceres-solver.org/ceres-solver-2.1.0.tar.gz \
+#  && tar zxf ceres-solver.tar.gz \
+#  && mkdir ceres-bin && cd ceres-bin \
+#  && cmake ../ceres-solver-2.1.0 \
+#  && make && make test && make install
 
-RUN wget -O ./pcl.zip https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.12.1.zip \
-  && unzip pcl.zip && cd pcl-pcl-1.12.1 && mkdir build && cd build \
-  && cmake .. && make && make install
+# RUN wget -O ./pcl.zip https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.12.1.zip \
+#  && unzip pcl.zip && cd pcl-pcl-1.12.1 && mkdir build && cd build \
+#  && cmake .. && make && make install
 
 ## Switch user to ${USER}
 USER ${USER}

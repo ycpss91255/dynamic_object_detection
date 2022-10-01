@@ -1,10 +1,35 @@
+# 操作步驟
 
-操作步驟
+## Reality
 
-實體
-open 3D Lidar       : $ roslaunch velodyne_pointcloud VLP16_points.launch
+- Test VLP-16 3D LiDAR
+  - Open VLP-16 3D LiDAR
+
+    ```shell
+    $ roslaunch velodyne_pointcloud VLP16_points.launch
+    ```
+
+  - Run rviz look VLP-16 3D LiDAR
+
+    ```shell
+    $ rosrun rviz rviz -f velodyne
+    ```
+
+- Run VLP-16 3D LiDAR and Rviz
+
+    ```shell
+    $ roslaunch aws_robomaker_small_warehouse_world small_warehouse_new.launch
+    ```
+
+### Reference
+
+- [ubuntu-16.04 ROS-kinetic 下 VLP-16 激光雷達測試詳細教程](https://blog.csdn.net/weixin_44387339/article/details/110350326)
+
+
+# Old
 
 使用data set
+
 pub kitti data set  : $ rosrun pub_test_data pub_tset_data.py
 
 open rviz           : $ rosrun rviz rviz -d src/velodyne_simulator/velodyne_description/rviz/final.rviz

@@ -1,2 +1,7 @@
 # catkin build Dependent
 osrf-pycommon==0.1.9
+pandas
+scikit-learn
+fuzzy-c-means
+cython
+
