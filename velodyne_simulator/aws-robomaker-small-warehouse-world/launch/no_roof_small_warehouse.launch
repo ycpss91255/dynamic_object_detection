@@ -1,0 +1,78 @@
+<launch>
+  <!-- Always set GUI to false for AWS RoboMaker Simulation
+       Use gui:=true on roslaunch command-line to run with a gui.
+  -->
+  <arg name="gui" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find aws_robomaker_small_warehouse_world)/worlds/no_roof_small_warehouse.world"/>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="$(arg gui)"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="verbose" default="false"/>
+  </include>
+
+  <!-- Spawn the robot with 3D Lidar -->
+  <arg name="gpu" default="false"/>
+  <arg name="organize_cloud" default="false"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/example.urdf.xacro' organize_cloud:=$(arg organize_cloud) gpu:=$(arg gpu)" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param /robot_description -model example"/>
+
+  <!-- rosrun world to VLP-16 TF -->
+  <node name="points_converter" pkg="dynamic_object_detection" type="points_converter"/>
+
+  <!-- RViz -->
+  <arg name="rviz" default="true"/>
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find velodyne_description)/rviz/final.rviz" />
+
+  <!-- rosbridge_websocket -->
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" >
+     <arg name="port" value="9090"/>
+  </include>
+
+  <!-- Spawn a walking robot 1 -->
+  <param name="man_1_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/moving_obs_1.xacro'" />
+  <node name="man_1_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"  output="screen" >
+      <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="man_1_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model man_1 -param man_1_description -x 1.8 -y 2.2 -z 0 -Y 0"/>
+
+  <!-- Spawn a walking robot 2 -->
+  <param name="man_2_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/moving_obs_2.xacro'" />
+  <node name="man_2_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"  output="screen" >
+      <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="man_2_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model man_2 -param man_2_description -x 1.8 -y -9.3 -z 0 -Y 1.5708"/>
+
+  <!-- Spawn a walking robot 3 -->
+  <param name="man_3_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/moving_obs_3.xacro'" />
+  <node name="man_3_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"  output="screen" >
+      <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="man_3_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model man_3 -param man_3_description -x -1.5 -y -9.3 -z 0 -Y 3.14059"/>
+
+  <!-- Spawn a walking robot 4 -->
+  <param name="man_4_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/moving_obs_4.xacro'" />
+  <node name="man_4_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"  output="screen" >
+      <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="man_4_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model man_4 -param man_4_description -x -3.7 -y 1 -z 0 -Y 1.5708"/>
+
+  <!-- rosrun walking robot 1 -->
+  <node name="walking_man_1" pkg="obstacle_motion" type="auto_walk_1.py"/>
+
+  <!-- rosrun walking robot 2 -->
+  <node name="walking_man_2" pkg="obstacle_motion" type="auto_walk_2.py"/>
+
+  <!-- rosrun walking robot 3 -->
+  <node name="walking_man_3" pkg="obstacle_motion" type="auto_walk_3.py"/>
+
+  <!-- rosrun walking robot 4 -->
+  <node name="walking_man_4" pkg="obstacle_motion" type="auto_walk_4.py"/>
+
+</launch>

@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+  <arg name="world_name" default="$(find velodyne_description)/world/example.world"/>
+
+  <!-- Start gazebo and load the world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+
+  <!-- Spawn a walking robot 1 -->
+  <param name="man_1_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/moving_obs_1.xacro'" />
+  <node name="man_1_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"  output="screen" >
+      <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="man_1_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model man_1 -param man_1_description -x -6 -y 0 -z 0 -Y -1.571"/>
+
+  <!-- Spawn a walking robot 2 -->
+  <param name="man_2_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/moving_obs_2.xacro'" />
+  <node name="man_2_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"  output="screen" >
+      <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="man_2_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model man_2 -param man_2_description -x 4 -y 5 -z 0 -Y 3.1416"/>
+
+
+  <!-- rosrun walking robot 1 -->
+  <node name="walking_man_1" pkg="obstacle_motion" type="auto_walk_1.py"/>
+
+  <!-- rosrun walking robot 2 -->
+  <node name="walking_man_2" pkg="obstacle_motion" type="auto_walk_2.py"/>
+
+
+  <!-- Spawn the robot with 3D Lidar -->
+  <arg name="gpu" default="false"/>
+  <arg name="organize_cloud" default="false"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/example.urdf.xacro' organize_cloud:=$(arg organize_cloud) gpu:=$(arg gpu)" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param /robot_description -model example"/>
+
+  <!-- rosrun world to VLP-16 TF -->
+  <node name="points_converter" pkg="dynamic_object_detection" type="points_converter"/>
+
+  <!-- RViz -->
+  <arg name="rviz" default="true"/>
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find velodyne_description)/rviz/final.rviz" />
+
+  <!-- rosbridge_websocket -->
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" >
+     <arg name="port" value="9090"/>
+  </include>
+
+</launch>

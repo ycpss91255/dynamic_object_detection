@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.6">
+  <world name="default">
+    <gravity>0 0 -9.8</gravity>
+    <physics default="0" name="default_physics" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <model name="aws_robomaker_warehouse_WallB_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_WallB_01</uri>
+        </include>
+        <pose frame="">0.0 0.0 0 0 0 0</pose>
+	</model>
+
+    <model name="aws_robomaker_warehouse_GroundB_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_GroundB_01</uri>
+        </include>
+        <pose frame="">0.0 0.0 -0.090092 0 0 0</pose>
+	</model>
+
+    <!-- <model name="aws_robomaker_warehouse_Lamp_01_002">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Lamp_01</uri>
+        </include>
+        <pose frame="">0 0 -4 0 0 0</pose>
+	</model> -->
+
+    <model name="aws_robomaker_warehouse_Bucket_01_03">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Bucket_01</uri>
+        </include>
+        <pose frame="">-6 -8 0 0 0 </pose>
+	</model>
+
+    <model name="aws_robomaker_warehouse_Bucket_01_04">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Bucket_01</uri>
+        </include>
+        <pose frame="">-6 -5 0 0 0 </pose>
+	</model>
+
+    <model name="aws_robomaker_warehouse_Bucket_01_0">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Bucket_01</uri>
+        </include>
+        <pose frame="">-6 -2 0 0 0 </pose>
+	</model>
+
+    <model name='aws_robomaker_warehouse_ClutteringA_01_016'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+        </include>
+        <pose frame=''>4.6 -8.5 -0.017477 0 0 3.1415926</pose>
+	</model>
+
+    <model name='aws_robomaker_warehouse_ClutteringA_01_017'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+        </include>
+        <pose frame=''>4.6 -4.75 -0.017477 0 0 3.1415926</pose>
+	</model>
+
+    <model name='aws_robomaker_warehouse_ClutteringA_01_018'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+        </include>
+        <pose frame=''>4.6 -1 -0.017477 0 0 3.1415926</pose>
+	</model>
+
+    <model name="aws_robomaker_warehouse_ClutteringC_01_032">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+        </include>
+        <pose frame="">4.5 8 -0.015663 0 0 1.563871</pose>
+	</model>
+
+    <model name='person_standing'>
+      <pose frame=''>4 5 0 0 0 3.1415926</pose>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 -0.1 0.95 0 -0 0</pose>
+          <mass>80</mass>
+          <inertia>
+            <ixx>24.88</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>25.73</iyy>
+            <iyz>0</iyz>
+            <izz>2.48</izz>
+          </inertia>
+        </inertial>
+        <collision name='bottom'>
+          <pose frame=''>0 -0.1 0.01 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.5 0.35 0.02</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='person'>
+          <pose frame=''>0 0 0.02 0.04 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://person_standing/meshes/standing.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <pose frame=''>0 0 0.02 0.04 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://person_standing/meshes/standing.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+
+    <model name='aws_robomaker_warehouse_ClutteringD_01_005'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+        </include>
+        <pose frame=''>-1 -7.5 -0.319559 0 0 0</pose>
+	</model>
+
+    <model name='aws_robomaker_warehouse_ClutteringD_01_006'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+        </include>
+        <pose frame=''>-1 8.5 -0.319559 0 0 0</pose>
+	</model>
+
+    <model name='aws_robomaker_warehouse_TrashCanC_01_002'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_TrashCanC_01</uri>
+        </include>
+        <pose frame=''>-6 6 0 0 0 1.5708</pose>
+	</model>
+
+    <model name='aws_robomaker_warehouse_ClutteringD_01_007'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+        </include>
+        <pose frame=''>-6 2.2 -0.319559 0 0 0</pose>
+	</model>
+
+    <light name="Warehouse_CeilingLight_003" type="point">
+      <pose frame="">0 0 9 0 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>80</range>
+        <constant>0.3</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>1</cast_shadows>
+      <direction>0.1 0.1 -1</direction>
+    </light>
+
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>-4.70385 10.895 16.2659 -0 0.921795 -1.12701</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>

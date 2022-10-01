@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <!-- ROS -->
+    <script src="js/eventemitter2.min.js"></script>
+    <script src="js/roslib.js"></script>
+
+
+    <link rel="stylesheet" href="css/form.css"></link>
+    <script src="js/move.js"></script>
+    <script src="js/KeyboardControl.js"></script>
+    <script src="js/topic.js"></script>
+
+
+</head>
+
+<body>
+
+    <header>ROBOT CONTROLLER</header>
+    <br>
+    <input type="button" value="左轉" onmousedown="movement(5)" onmouseup="movement(0)">&nbsp &nbsp</input>
+    <input type="button" value="前進" onmousedown="movement(1)" onmouseup="movement(0)">&nbsp &nbsp</input>
+    <input type="button" value="右轉" onmousedown="movement(6)" onmouseup="movement(0)"></input>
+    <br><br>
+    <input type="button" value="左移" onmousedown="movement(3)" onmouseup="movement(0)">&nbsp &nbsp</input>
+    <input type="button" value="後退" onmousedown="movement(2)" onmouseup="movement(0)">&nbsp &nbsp</input>
+    <input type="button" value="右移" onmousedown="movement(4)" onmouseup="movement(0)"></input>
+    <br>
+    <table>
+        <tr>
+            <th>
+                Speed
+            </th>
+            <th>
+                <input type="range" min="1" max="100" value="20" style="width:130px" id="speed_range" onchange="range_change(this.value)">
+            </th>
+            <th>
+                <input type="text" id="speed_enter" style="width:40px;height:30px" value="20" onchange="enter_change(this.value)"></input>
+            </th>
+    </table>
+    <input type="button" id="button_enable" value="按鈕控制" onclick="control_type(0)" style="width:120px;background-color: #d1d1d1"></input>
+    <input type="button" id="keybord_enable" value="鍵盤控制" onclick="control_type(1)" style="width:120px;background-color: #ffffff"></input>
+
+</body>
+
+</html>

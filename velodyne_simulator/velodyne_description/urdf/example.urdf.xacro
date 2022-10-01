@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="example">
+  <xacro:arg name="gpu" default="false"/>
+  <xacro:property name="gpu" value="$(arg gpu)" />
+  <xacro:arg name="organize_cloud" default="false"/>
+  <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+
+  <!-- Base Footprint -->
+  <link name="base_vlp_16" />
+
+  <!-- Base Link -->
+  <joint name="base_link_joint" type="fixed" >
+    <parent link="base_vlp_16"/>
+    <child link="base_link" />
+    <origin xyz="0 0 0.05" rpy="0 0 0" />
+  </joint>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Red</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <link name="base_link" >
+    <visual>
+      <geometry>
+        <box size="0.75 0.5 0.1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.75 0.5 0.1" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="10"/>
+      <inertia ixx="3.0" ixy="0.0" ixz="0.0"
+               iyy="3.0" iyz="0.0"
+               izz="3.0" />
+    </inertial>
+  </link>
+
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel/vlp_16</commandTopic>
+      <odometryTopic>odom/vlp_16</odometryTopic>
+      <odometryFrame>odom/vlp_16</odometryFrame>
+      <odometryRate>30.0</odometryRate>
+      <robotBaseFrame>base_vlp_16</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+  <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="440" gpu="${gpu}">
+    <origin xyz="0 0 1" rpy="0 0 0" />
+  </xacro:VLP-16>
+
+  <!-- <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
+  <xacro:HDL-32E parent="base_link" name="velodyne2" topic="/velodyne_points2" organize_cloud="${organize_cloud}" hz="10" samples="220" gpu="${gpu}">
+    <origin xyz="0 0 0.6" rpy="0 0 0" />
+  </xacro:HDL-32E> -->
+
+
+</robot>

@@ -1,0 +1,21 @@
+header{
+    color: #ff0000;
+    text-align: center;
+    font-size: 40px;
+}
+
+body{
+    background-color: #dce6f3;
+    text-align: center;
+}
+
+table{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+input{
+    width:60px;
+    height:50px;
+    font-size:20px;
+}
